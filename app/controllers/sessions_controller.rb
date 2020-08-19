@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
     user = User.from_omniauth(request.env['omniauth.auth'])
     if user.valid?
       session[:user_id] = user.id
-      redirect_to "/"
+      redirect_to "/dashboard"
     else
       redirect_to '/login'
     end
