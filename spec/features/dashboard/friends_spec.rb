@@ -30,10 +30,12 @@ RSpec.describe 'user dashboard friends section' do
 
       expect(current_path).to eq('/dashboard')
       expect(page).to have_content("You currently have no friends")
-      
+
       fill_in :email, with: jessye.email
       click_on "Add Friend"
       expect(page).to have_content("Jessye E")
     end
+
+    
   end
 end
