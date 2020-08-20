@@ -12,8 +12,17 @@ RSpec.describe Friendship do
     end
     it ".create_reciprocal_for_ids" do
       Friendship.create_reciprocal_for_ids(@sienna.id, @jessye.id)
-      expect(@sienna.friends).to eq(@jessye)
-      expect(@jessye.friends).to eq(@sienna)
+      expect(@sienna.friends.first).to eq(@jessye)
+      expect(@jessye.friends.first).to eq(@sienna)
+    end
+    it ".destroy_reciprocal_for_ids" do
+      Friendship.create_reciprocal_for_ids(@sienna.id, @jessye.id)
+      expect(@sienna.friends.first).to eq(@jessye)
+      expect(@jessye.friends.first).to eq(@sienna)
+
+      Friendship.destroy_reciprocal_for_ids(@sienna.id, @jessye.id)
+      expect(@sienna.friends.first).to_not eq(@jessye)
+      expect(@jessye.friends.first).to_not eq(@sienna)
     end
   end
 end
