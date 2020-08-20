@@ -1,4 +1,5 @@
 class User < ApplicationRecord
+  
 
   def self.from_omniauth(response)
     user = User.find_or_create_by(uid: response[:uid])
