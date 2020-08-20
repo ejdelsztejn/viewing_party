@@ -7,6 +7,7 @@ RSpec.describe 'user dashboard page' do
     OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
       :uid => 'mock_uid',
       :info => {
+        :name => 'Mock User',
         :email => 'mock_user_email'
       },
       :credentials => {
@@ -20,7 +21,7 @@ RSpec.describe 'user dashboard page' do
     click_on 'Log In with Google'
     expect(current_path).to eq('/dashboard')
 
-    expect(page).to have_content("Welcome, mock_user_email")
+    expect(page).to have_content("Welcome, Mock User")
     expect(page).to have_button("Discover Movies")
     expect(page).to have_css('section.friends')
     expect(page).to have_css('section.viewing-parties')

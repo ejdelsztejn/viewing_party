@@ -9,7 +9,7 @@ RSpec.describe 'Login' do
         OmniAuth.config.mock_auth[:google_oauth2] = OmniAuth::AuthHash.new({
           :uid => 'mock_uid',
           :info => {
-            :name => 'Mock User'
+            :name => 'Mock User',
             :email => 'mock_user_email'
           },
           :credentials => {
