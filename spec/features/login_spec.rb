@@ -27,7 +27,7 @@ RSpec.describe 'Login' do
         expect(page).to have_button('Log In with Google')
         click_on 'Log In with Google'
         expect(current_path).to eq('/dashboard')
-        # expect(page).to have_content("Welcome, ")
+        expect(page).to have_content("Welcome, mock_user_email")
       end
     end
   end
