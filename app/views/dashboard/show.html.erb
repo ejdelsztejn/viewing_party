@@ -1,8 +1,21 @@
-<h1>Welcome, <%= @current_user.email %></h1>
+<h1>Welcome, <%= @current_user.name %></h1>
 
 <%= button_to "Discover Movies", "/movies", method: :get %>
 
 <section class="friends">
+  <h3>Friends</h3>
+  <% if @current_user.friends.empty? %>
+    <p>You currently have no friends</p>
+  <% else %>
+    <% @current_user.friends.each do |friend| %>
+      <p><%= friend.name %><p>
+    <% end %>
+  <% end %>
+
+  <%= form_tag "/friendships", method: :post%>
+  <%= label_tag :email %>
+  <%= text_field_tag :email %>
+  <%= submit_tag "Add Friend" %>
 </section>
 
 <section class="viewing-parties">
