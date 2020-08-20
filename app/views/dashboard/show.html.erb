@@ -3,6 +3,14 @@
 <%= button_to "Discover Movies", "/movies", method: :get %>
 
 <section class="friends">
+  <h3>Friends</h3>
+  <% if @current_user.friends.empty? %>
+    <p>You currently have no friends</p>
+  <% else %>
+    <% @current_user.friends.each do |friend| %>
+      <p><%= friend.name %><p>
+    <% end %>
+  <% end %>
 </section>
 
 <section class="viewing-parties">
