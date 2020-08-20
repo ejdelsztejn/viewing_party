@@ -22,7 +22,7 @@ gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   gem 'pry'
-  #gem 'travis'
+  gem 'shoulda-matchers'
 end
 
 group :development do
