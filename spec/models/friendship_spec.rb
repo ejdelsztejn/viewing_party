@@ -11,7 +11,9 @@ RSpec.describe Friendship do
       @sienna = User.create(name: "Sienna K", uid: "12345", email: "cece@is.cool", token: "ceces_token")
     end
     it ".create_reciprocal_for_ids" do
-      require "pry"; binding.pry
+      Friendship.create_reciprocal_for_ids(@sienna.id, @jessye.id)
+      expect(@sienna.friends).to eq(@jessye)
+      expect(@jessye.friends).to eq(@sienna)
     end
   end
 end
