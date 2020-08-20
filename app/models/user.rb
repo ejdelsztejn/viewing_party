@@ -12,8 +12,3 @@ class User < ApplicationRecord
     user
   end
 end
-
-class Friendship < ApplicationRecord
-  belongs_to :user
-  belongs_to :friend, class_name: "User"
-end
