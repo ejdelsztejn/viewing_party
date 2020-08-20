@@ -11,6 +11,11 @@
       <p><%= friend.name %><p>
     <% end %>
   <% end %>
+
+  <%= form_tag "/friendships", method: :post%>
+  <%= label_tag :email %>
+  <%= text_field_tag :email %>
+  <%= submit_tag "Add Friend" %>
 </section>
 
 <section class="viewing-parties">
