@@ -22,7 +22,7 @@ gem 'omniauth-rails_csrf_protection'
 
 group :development, :test do
   gem 'pry'
-  gem 'travis'
+  #gem 'travis'
 end
 
 group :development do
