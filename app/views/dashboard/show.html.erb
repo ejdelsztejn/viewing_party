@@ -20,3 +20,11 @@
 
 <section class="viewing-parties">
 </section>
+
+<br>
+  <%= button_to 'Discover Top-rated Movies', '/movies/top-rated' %>
+<br>
+<%= form_tag "/movies", method: :get %>
+<%= label_tag :keyword %>
+<%= text_field_tag :keyword %>
+<%= submit_tag "Find Movies" %>
