@@ -1,1 +1,8 @@
 <h1>Discover Movies</h1>
+<br>
+<%= button_to 'Discover Top-rated Movies', '/movies/top-rated' %>
+<br>
+<%= form_tag "/movies/search" %>
+<%= label_tag :keyword %>
+<%= text_field_tag :keyword %>
+<%= submit_tag "Find Movies" %>
