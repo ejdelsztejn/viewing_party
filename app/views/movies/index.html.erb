@@ -2,7 +2,7 @@
 <br>
 <%= button_to 'Discover Top-rated Movies', '/movies/top-rated' %>
 <br>
-<%= form_tag "/movies/search" %>
+<%= form_tag "/movies/search", method: :get %>
 <%= label_tag :keyword %>
 <%= text_field_tag :keyword %>
 <%= submit_tag "Find Movies" %>

@@ -12,4 +12,8 @@ class MoviesController < ApplicationController
 
     # Make movie object (PORO) that can be sent to the view
   end
+
+  def search
+    params[:keyword]
+  end
 end
