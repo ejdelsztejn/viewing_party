@@ -1,8 +1,5 @@
 <h1>Discover Movies</h1>
-<br>
-<%= button_to 'Discover Top-rated Movies', '/movies/top-rated' %>
-<br>
-<%= form_tag "/movies/search", method: :get %>
-<%= label_tag :keyword %>
-<%= text_field_tag :keyword %>
-<%= submit_tag "Find Movies" %>
+<% @movies.each do |movie| %>
+  <p>Movie Title: <%= movie.title %></p>
+  <p>Vote Average: <%= movie.vote_average %></p>
+<% end %>

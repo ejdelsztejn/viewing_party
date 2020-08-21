@@ -9,12 +9,17 @@ RSpec.describe 'discover movies page' do
 
       expect(current_path).to eq('/dashboard')
 
+      within 'nav' do
+        expect(page).to have_button('Discover Top-rated Movies')
+        expect(page).to have_content('Keyword')
+        expect(page).to have_button('Find Movies')
+      end
+
       click_on "Discover Movies"
 
       expect(current_path).to eq('/movies')
-      expect(page).to have_button('Discover Top-rated Movies')
-      expect(page).to have_content('Enter a keyword:')
-      expect(page).to have_button('Find Movies')
+
+      save_and_open_page
     end
   end
 end
