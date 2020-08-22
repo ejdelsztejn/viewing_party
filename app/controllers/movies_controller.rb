@@ -22,4 +22,11 @@ class MoviesController < ApplicationController
       ## generic list sorted by popularity
     end
   end
+
+  def top_rated
+    binding.pry
+  end
+
+  def discover
+  end 
 end
