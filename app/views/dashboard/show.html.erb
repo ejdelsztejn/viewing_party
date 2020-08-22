@@ -1,5 +1,7 @@
 <h1>Welcome, <%= @current_user.name %></h1>
 
+<%= button_to "Movies", "/movies", method: :get %>
+
 <section class="friends">
   <h3>Friends</h3>
   <% if @current_user.friends.empty? %>

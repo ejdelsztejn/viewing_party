@@ -7,14 +7,14 @@ class SearchFacade
   end
 
   def search_movies
-    movies_info = get_search_movies
+    movies_info = results_search_movies
 
     @movies = movies_info[:results].map do |movie_info|
       Movie.new(movie_info)
     end.take(40)
   end
 
-  def get_search_movies
+  def results_search_movies
     @movies_service.search_movies(@keyword)
   end
 end
