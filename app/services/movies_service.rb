@@ -15,6 +15,8 @@ class MoviesService
     JSON.parse(results.body, symbolize_names: true)
   end
 
+
+
   private
 
   def conn
