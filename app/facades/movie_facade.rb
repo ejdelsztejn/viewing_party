@@ -5,11 +5,11 @@ class MovieFacade
   end
 
   def top_rated_movies
-    movies_info = get_top_rated_movies.take(40)
+    movies_info = get_top_rated_movies
 
     @movies = movies_info[:results].map do |movie_info|
       Movie.new(movie_info)
-    end
+    end.take(40)
   end
 
   def get_top_rated_movies
@@ -17,11 +17,11 @@ class MovieFacade
   end
 
   def movies
-    movies_info = get_movies.take(40)
+    movies_info = get_movies
 
     @movies = movies_info[:results].map do |movie_info|
       Movie.new(movie_info)
-    end
+    end.take(40)
   end
 
   def get_movies
