@@ -1,5 +1,11 @@
 <h1>Discover Movies</h1>
 <% @movies.each do |movie| %>
-  <p>Movie Title: <%= movie.title %></p>
-  <p>Vote Average: <%= movie.vote_average %></p>
+  <section class="movie">
+  <p class="title">
+    Movie Title: <%= movie.title %>
+  </p>
+  <p class="vote_average">
+    Vote Average: <%= movie.vote_average %>
+  </p>
+  </section>
 <% end %>
