@@ -7,9 +7,20 @@ RSpec.describe 'find movies' do
 
       click_on 'Log In with Google'
     end
+
+    it 'displays a button for finding top_rated movies and a search bar' do
+      visit "/movies"
+      
+      expect(page).to have_button("Discover Top-rated Movies")
+
+      within ".search_form" do
+        expect(page).to have_field(:keyword)
+      end
+    end
+
     it 'I can link from the dashboard to the movies page' do
       expect(current_path).to eq("/dashboard")
-      
+
       click_on "Movies"
 
       expect(current_path).to eq("/movies")
