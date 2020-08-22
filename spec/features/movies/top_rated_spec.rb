@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'find top_rated movies' do
   describe 'As an authenticated user' do
+    before :each do
+      visit '/'
+
+      click_on 'Log In with Google'
+    end
     it 'I can visit the discover page and make a request for top rated movie results' do
       visit '/movies/discover'
 

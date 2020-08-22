@@ -2,6 +2,11 @@ require 'rails_helper'
 
 RSpec.describe 'search movies by keyword' do
   describe 'As an authenticated user' do
+    before :each do
+      visit '/'
+
+      click_on 'Log In with Google'
+    end
     it 'I can visit the discover page and make a search for movies that match a keyword' do
       visit '/movies/discover'
 
