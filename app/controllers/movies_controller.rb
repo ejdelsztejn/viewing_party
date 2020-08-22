@@ -5,8 +5,6 @@ class MoviesController < ApplicationController
       search_facade = SearchFacade.new(keyword)
       @movies = search_facade.search_movies
 
-      binding.pry
-
       # search_word = params[:keyword]
       # conn = Faraday.new(url: "https://api.themoviedb.org")
       #
@@ -28,5 +26,5 @@ class MoviesController < ApplicationController
   end
 
   def discover
-  end 
+  end
 end
