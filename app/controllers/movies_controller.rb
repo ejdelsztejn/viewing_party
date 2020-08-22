@@ -12,6 +12,7 @@ class MoviesController < ApplicationController
       #
       # json = JSON.parse(response.body, symbolize_names: true)
     elsif params.keys.include?("top_rated")
+      binding.pry
       movie_facade = MovieFacade.new
       @movies = movie_facade.top_rated_movies
     else
