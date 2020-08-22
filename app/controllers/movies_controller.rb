@@ -5,24 +5,21 @@ class MoviesController < ApplicationController
       search_facade = SearchFacade.new(keyword)
       @movies = search_facade.search_movies
 
+      binding.pry
+
       # search_word = params[:keyword]
       # conn = Faraday.new(url: "https://api.themoviedb.org")
       #
       # response = conn.get("https://api.themoviedb.org/3/search/movie?api_key=#{ENV['MOVIES_API_KEY']}&language=en-US&query=#{search_word}&page=1&include_adult=false")
       #
       # json = JSON.parse(response.body, symbolize_names: true)
+    elsif params.keys.include?("top_rated")
+      movie_facade = MovieFacade.new
+      @movies = movie_facade.top_rated_movies
     else
-      search_word = "happy"
-      conn = Faraday.new(url: "https://api.themoviedb.org")
-
-      response = conn.get("https://api.themoviedb.org/3/search/movie?api_key=#{ENV['MOVIES_API_KEY']}&language=en-US&query=#{search_word}&page=1&include_adult=false")
-
-      json = JSON.parse(response.body, symbolize_names: true)
-
-      @movies = json[:results].map do |movie_info|
-        Movie.new(movie_info)
-      end
+      movie_facade = MovieFacade.new
+      @movies = movie_facade.movies
+      ## generic list sorted by popularity
     end
-    # Make movie object (PORO) that can be sent to the view
   end
 end
