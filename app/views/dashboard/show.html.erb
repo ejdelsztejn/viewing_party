@@ -1,7 +1,5 @@
 <h1>Welcome, <%= @current_user.name %></h1>
 
-<%= button_to "Discover Movies", "/movies", method: :get %>
-
 <section class="friends">
   <h3>Friends</h3>
   <% if @current_user.friends.empty? %>
@@ -21,10 +19,5 @@
 <section class="viewing-parties">
 </section>
 
-<br>
-  <%= button_to 'Discover Top-rated Movies', '/movies/top-rated' %>
-<br>
-<%= form_tag "/movies", method: :get %>
-<%= label_tag :keyword %>
-<%= text_field_tag :keyword %>
-<%= submit_tag "Find Movies" %>
+
+<%= link_to "Discover Movies", "/movies/discover" %>
