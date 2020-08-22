@@ -1,4 +1,4 @@
-<h1>Discover Movies</h1>
+<h3>Movie Finder: </h3>
 
 <br>
   <%= button_to 'Discover Top-rated Movies', "/movies", params: {top_rated: true}, method: :get %>
@@ -9,14 +9,3 @@
   <%= text_field_tag :keyword %>
   <%= submit_tag "Find Movies" %>
 </section>
-
-<% @movies.each do |movie| %>
-  <section class="movie">
-  <p class="title">
-    Movie Title: <%= movie.title %>
-  </p>
-  <p class="vote_average">
-    Vote Average: <%= movie.vote_average %>
-  </p>
-  </section>
-<% end %>

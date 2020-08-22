@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   get 'auth/:provider/callback', to: 'sessions#omniauth'
   get '/dashboard', to: 'dashboard#show'
 
+  get '/movies/discover', to: 'movies#discover'
+
   get '/movies', to: 'movies#index'
 
   post '/friendships', to: 'friendships#create'

@@ -1,6 +1,6 @@
 <h1>Welcome, <%= @current_user.name %></h1>
 
-<%= button_to "Discover Movies", "/movies", method: :get %>
+<%= button_to "Movies", "/movies", method: :get %>
 
 <section class="friends">
   <h3>Friends</h3>
@@ -20,3 +20,6 @@
 
 <section class="viewing-parties">
 </section>
+
+
+<%= link_to "Discover Movies", "/movies/discover" %>

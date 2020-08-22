@@ -8,7 +8,7 @@ RSpec.describe 'user dashboard page' do
     expect(current_path).to eq('/dashboard')
 
     expect(page).to have_content("Welcome, Mock User")
-    expect(page).to have_button("Discover Movies")
+    expect(page).to have_button("Movies")
     expect(page).to have_css('section.friends')
     expect(page).to have_css('section.viewing-parties')
   end
