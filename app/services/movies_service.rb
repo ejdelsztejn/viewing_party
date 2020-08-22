@@ -4,6 +4,17 @@ class MoviesService
     JSON.parse(results.body, symbolize_names: true)
   end
 
+  def top_rated_movies
+    results = conn.get("https://api.themoviedb.org/3/movie/top_rated?api_key=#{ENV['MOVIES_API_KEY']}&language=en-US&page=1")
+    JSON.parse(results.body, symbolize_names: true)
+  end
+
+  def movies
+    ## list of movies just based on popularity
+    results = conn.get("https://api.themoviedb.org/3/movie/popular?api_key=#{ENV['MOVIES_API_KEY']}&language=en-US&page=1")
+    JSON.parse(results.body, symbolize_names: true)
+  end
+
   private
 
   def conn
