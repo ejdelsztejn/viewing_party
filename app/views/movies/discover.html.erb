@@ -1,7 +1,7 @@
 <h3>Movie Finder: </h3>
 
 <br>
-  <%= button_to 'Discover Top-rated Movies', '/movies/top-rated?top_rated=true' %>
+  <%= button_to 'Discover Top-rated Movies', '/movies?top_rated=true', method: :get %>
 <br>
 <section class="search_form">
   <%= form_tag "/movies", method: :get %>

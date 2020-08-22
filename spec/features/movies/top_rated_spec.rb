@@ -9,7 +9,7 @@ RSpec.describe 'find top_rated movies' do
 
       expect(current_path).to eq("/movies")
 
-      expect(page).to have_css(".movie", count: 40)
+      expect(page).to have_css(".movie", count: 20)
 
       within(first(".movie")) do
         expect(page).to have_css(".title")
