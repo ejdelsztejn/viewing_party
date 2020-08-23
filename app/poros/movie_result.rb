@@ -20,7 +20,7 @@ class MovieResult
   end
 
   def genres
-    genres = @genre_info.map do |genre|
+    genres = @genres.map do |genre|
       genre[:name]
     end
     genres.join(', ')
