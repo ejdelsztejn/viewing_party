@@ -20,6 +20,5 @@ class MoviesController < ApplicationController
   def show
     movie_data = MovieData.all_data(params[:movie_id])
     @movie = MovieResult.new(movie_data)
-    require "pry"; binding.pry
   end
 end
