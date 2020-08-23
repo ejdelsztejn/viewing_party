@@ -4,6 +4,7 @@ class MoviesController < ApplicationController
       keyword = params[:keyword]
       search_facade = SearchFacade.new(keyword)
       @movies = search_facade.search_movies
+
     elsif params.keys.include?('top_rated')
       movie_facade = MovieFacade.new
       @movies = movie_facade.top_rated_movies
@@ -15,4 +16,9 @@ class MoviesController < ApplicationController
   end
 
   def discover; end
+
+  def show
+    movie_data = MovieData.all_data(params[:movie_id])
+    @movie = MovieResult.new(movie_data)
+  end
 end
