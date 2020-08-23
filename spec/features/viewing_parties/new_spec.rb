@@ -23,5 +23,28 @@ RSpec.describe 'movie details page' do
         expect(current_path).to eq('/viewing_parties/new')
       end
     end
+    describe 'When I visit the new viewing party page' do
+      it 'I should see a form with the following' do
+       # Movie Title (that is un-editable)
+       # Duration of Party with a default value of movie runtime in minutes
+       # When: as a date picker
+       # Checkboxes next to each friend (if user has friends)
+       # Button to create party
+       visit '/movies/discover'
+
+       expect(page).to have_button("Discover Top-rated Movies")
+       click_on 'Discover Top-rated Movies'
+
+       expect(page).to have_link('The Shawshank Redemption')
+       click_on 'The Shawshank Redemption'
+
+       expect(page).to have_content('The Shawshank Redemption')
+
+       click_on 'Create Viewing Party'
+       expect(current_path).to eq('/viewing_parties/new')
+
+       
+      end
+    end
   end
 end
