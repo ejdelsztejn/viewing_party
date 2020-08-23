@@ -13,7 +13,7 @@
 <% @movies.each do |movie| %>
   <section class="movie">
   <p class="title">
-    Movie Title: <%= link_to "#{movie.title}", "/movies/#{movie.id}" %>
+    Movie Title: <div class="title-movie"><%= link_to "#{movie.title}", "/movies/#{movie.id}" %></div>
   </p>
   <p class="vote_average">
     Vote Average: <%= movie.vote_average %>

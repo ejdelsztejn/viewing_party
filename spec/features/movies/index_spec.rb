@@ -10,7 +10,7 @@ RSpec.describe 'find movies' do
 
     it 'displays a button for finding top_rated movies and a search bar' do
       visit "/movies"
-      
+
       expect(page).to have_button("Discover Top-rated Movies")
 
       within ".search_form" do
@@ -32,8 +32,7 @@ RSpec.describe 'find movies' do
         name = find('.title').text
         expect(name).not_to be_empty
 
-        ## Not sure how to call this as a link because the movie obj aren't being saved to the DB
-        # expect(page).to have_link(find('.title').text)
+        expect(page).to have_link(find('.title-movie').text)
 
         expect(page).to have_css(".vote_average")
         name = find('.vote_average').text
