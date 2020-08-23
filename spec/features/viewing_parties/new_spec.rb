@@ -20,7 +20,7 @@ RSpec.describe 'movie details page' do
         expect(page).to have_content('The Shawshank Redemption')
 
         click_on 'Create Viewing Party'
-        expect(current_path).to eq('/viewing_parties/new')
+        expect(page).to have_content('New Viewing Party')
       end
     end
     describe 'When I visit the new viewing party page' do
@@ -41,10 +41,11 @@ RSpec.describe 'movie details page' do
        expect(page).to have_content('The Shawshank Redemption')
 
        click_on 'Create Viewing Party'
-       expect(current_path).to eq('/viewing_parties/new')
 
-       
-      end
+       expect(page).to have_content('New Viewing Party')
+       expect(page).to have_content('Movie Title: The Shawshank Redemption')
+       expect(page).to have_content('Duration of Party: 142 minutes')
+     end
     end
   end
 end
