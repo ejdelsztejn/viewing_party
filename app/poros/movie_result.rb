@@ -5,8 +5,8 @@ class MovieResult
               :runtime,
               :summary,
               :genres,
-              :reviews
-              # :cast,
+              :reviews,
+              :cast
 
   def initialize(data)
     @id = data[:id]
@@ -16,7 +16,7 @@ class MovieResult
     @summary = data[:summary]
     @genres = data[:genres]
     @reviews = data[:reviews]
-    # @cast = data[:cast]
+    @cast = data[:cast]
   end
 
   def genres
@@ -27,6 +27,6 @@ class MovieResult
   end
 
   def review_count
-    reviews[:results].count
+    reviews.count
   end
 end

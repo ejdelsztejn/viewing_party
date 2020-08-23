@@ -2,7 +2,7 @@ class MovieData
   def self.all_data(movie_id)
     general_info = self.general_info(movie_id)
     reviews = self.reviews(movie_id)
-    require "pry"; binding.pry
+    cast = self.cast(movie_id)
     {
       id: general_info[:id],
       title: general_info[:original_title],
@@ -10,8 +10,8 @@ class MovieData
       runtime: general_info[:runtime],
       summary: general_info[:overview],
       genres: general_info[:genres],
-      #reviews: reviews[:]
-      # @reviews = data[:reviews]
+      reviews: reviews[:results],
+      cast: cast[:cast].first(10)
     }
   end
 
