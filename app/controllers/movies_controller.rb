@@ -18,6 +18,6 @@ class MoviesController < ApplicationController
   def discover; end
 
   def show
-    require "pry"; binding.pry
+
   end
 end
