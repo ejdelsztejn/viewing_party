@@ -3,3 +3,18 @@
 <h3>Runtime: <%= @movie.runtime %> minutes</h3>
 <h3>Genres: <%= @movie.genres %></h3>
 <h3>Summary: <%= @movie.summary %></h3>
+<section class='cast'>
+  <h3>Cast</h3>
+  <% @movie.cast.each do |cast_member| %>
+    <p><%= cast_member[:name] %></p>
+  <% end %>
+</section>
+<section class='reviews'
+  <h3>Reviews</h3>
+  <h2>Number of Reviews: <%= @movie.review_count %></h2>
+  <% @movie.reviews.each do |review| %>
+    <p>Author: <%= review[:author] %></p>
+    <p>Review: <%= review[:content] %></p>
+    <br>
+  <% end %>
+</section>
