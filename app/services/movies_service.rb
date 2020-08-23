@@ -15,6 +15,11 @@ class MoviesService
     JSON.parse(results.body, symbolize_names: true)
   end
 
+  def movie_details(movie_id)
+    results = conn.get("https://api.themoviedb.org/3/movie/#{movie_id}?api_key=#{ENV['MOVIES_API_KEY']}")
+    JSON.parse(results.body, symbolize_names: true)
+  end
+
   private
 
   def conn
