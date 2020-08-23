@@ -30,6 +30,13 @@ RSpec.describe 'movie details page' do
        # When: as a date picker
        # Checkboxes next to each friend (if user has friends)
        # Button to create party
+       jessye = User.create(name: "Jessye E", uid: "67890", email: "jessye@is.cool", token: "jessyes_token")
+
+       visit '/dashboard'
+
+       fill_in :email, with: jessye.email
+       click_on "Add Friend"
+
        visit '/movies/discover'
 
        expect(page).to have_button("Discover Top-rated Movies")
@@ -41,10 +48,12 @@ RSpec.describe 'movie details page' do
        expect(page).to have_content('The Shawshank Redemption')
 
        click_on 'Create Viewing Party'
-
+       save_and_open_page
        expect(page).to have_content('New Viewing Party')
-       expect(page).to have_content('Movie Title: The Shawshank Redemption')
-       expect(page).to have_content('Duration of Party: 142 minutes')
+       expect(page).to have_content('Movie title')
+       expect(page).to have_content('Duration of party')
+       expect(page).to have_content("Invite friends")
+       expect(page).to have_content("Jessye E")
      end
     end
   end
