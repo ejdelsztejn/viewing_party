@@ -4,20 +4,19 @@ class MovieResult
               :vote_average,
               :runtime,
               :summary,
-              :genre_info
+              :genres,
+              :reviews
               # :cast,
-              # :reviews
-
 
   def initialize(data)
     @id = data[:id]
-    @title = data[:original_title]
+    @title = data[:title]
     @vote_average = data[:vote_average]
     @runtime = data[:runtime]
-    @summary = data[:overview]
-    @genre_info = data[:genres]
+    @summary = data[:summary]
+    @genres = data[:genres]
+    @reviews = data[:reviews]
     # @cast = data[:cast]
-    # @reviews = data[:reviews]
   end
 
   def genres
@@ -25,5 +24,9 @@ class MovieResult
       genre[:name]
     end
     genres.join(', ')
+  end
+
+  def review_count
+    reviews[:results].count
   end
 end
