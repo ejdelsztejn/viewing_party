@@ -4,7 +4,7 @@ class MovieResult
               :vote_average,
               :runtime,
               :summary,
-              :genres
+              :genre_info
               # :cast,
               # :reviews
 
@@ -15,8 +15,15 @@ class MovieResult
     @vote_average = data[:vote_average]
     @runtime = data[:runtime]
     @summary = data[:overview]
-    @genres = data[:genres]
+    @genre_info = data[:genres]
     # @cast = data[:cast]
     # @reviews = data[:reviews]
+  end
+
+  def genres
+    genres = @genre_info.map do |genre|
+      genre[:name]
+    end
+    genres.join(', ')
   end
 end
