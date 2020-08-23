@@ -1,0 +1,2 @@
+class MovieResult 
+end
