@@ -9,7 +9,9 @@ class User < ApplicationRecord
     user.name = response[:info][:name]
     user.email = response[:info][:email]
     user.uid = response[:uid]
-    user.token = response[:credentials][:token]
+    user.access_token = response[:credentials][:token]
+    user.expires_at = response[:credentials][:expires_at]
+    user.refresh_token = response[:credentials][:refresh_token]
     user.save
     user
   end
