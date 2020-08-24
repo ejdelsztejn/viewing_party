@@ -6,6 +6,13 @@ RSpec.describe 'movie details page' do
       visit '/'
 
       click_on 'Log In with Google'
+
+      jessye = User.create(name: "Jessye E", uid: "67890", email: "jessye@is.cool", token: "jessyes_token")
+
+      visit '/dashboard'
+
+      fill_in :email, with: jessye.email
+      click_on "Add Friend"
     end
     describe 'When I visit the movies page, and I click the button to create a viewing party' do
       it 'I should be redirected to a new viewing party form' do
@@ -30,13 +37,6 @@ RSpec.describe 'movie details page' do
        # When: as a date picker
        # Checkboxes next to each friend (if user has friends)
        # Button to create party
-       jessye = User.create(name: "Jessye E", uid: "67890", email: "jessye@is.cool", token: "jessyes_token")
-
-       visit '/dashboard'
-
-       fill_in :email, with: jessye.email
-       click_on "Add Friend"
-
        visit '/movies/discover'
 
        expect(page).to have_button("Discover Top-rated Movies")
@@ -48,12 +48,28 @@ RSpec.describe 'movie details page' do
        expect(page).to have_content('The Shawshank Redemption')
 
        click_on 'Create Viewing Party'
-       save_and_open_page
+
        expect(page).to have_content('New Viewing Party')
        expect(page).to have_content('Movie title')
        expect(page).to have_content('Duration of party')
        expect(page).to have_content("Invite friends")
        expect(page).to have_content("Jessye E")
+     end
+     it 'If I fill out the form and submit it, I will create a new viewing party' do
+       visit '/movies/discover'
+
+       click_on 'Discover Top-rated Movies'
+       click_on 'The Shawshank Redemption'
+       click_on 'Create Viewing Party'
+
+       fill_in 'Duration of party', with: 200
+       fill_in 'Date', with: '2020-08-29'
+       fill_in 'Time', with: '18:00'
+       check('friend_ids[]', match: :first)
+
+       click_on 'Create Viewing Party'
+
+       expect(page).to have_content('Thank you for creating a viewing party')
      end
     end
   end
