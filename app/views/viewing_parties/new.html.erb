@@ -1,0 +1,26 @@
+<h1>New Viewing Party</h1>
+<%= form_tag("/viewing_parties", method: :post) do %>
+  <br>
+  <%= label_tag :movie_title %><br/>
+  <input type="text" id="movie_title" name="movie_title" value="<%= @movie.title %>" readonly><br/>
+  <br>
+  <%= label_tag :duration_of_party %><br/>
+  <%= text_field_tag :duration_of_party, @movie.runtime %><br/>
+  <br>
+  <%= label_tag :date %><br/>
+  <input type="date" id="date" name="date"><br/>
+  <br>
+  <%= label_tag :time %><br/>
+  <input type="time" id="time" name="time"><br/>
+  <p>Invite friends:</p>
+  <% if current_user.friends.empty? %>
+    <p>You have not added any friends</p>
+  <% else %>
+    <% current_user.friends.each do |friend| %>
+      <%= check_box_tag 'friend_ids[]', friend.id -%>
+      <%= h friend.name -%>
+    <% end %>
+  <% end %>
+  <br>
+  <%= submit_tag "Create Viewing Party" %>
+<% end %>
