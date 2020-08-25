@@ -13,13 +13,19 @@ class PartiesController < ApplicationController
     client = get_google_calendar_client(current_user)
     viewing_party = current_user.parties.create(
       movie_title: params[:movie_title],
-      duration_of_party: params[:duration],
+      duration_of_party: params[:duration_of_party],
       friend_ids: params[:friend_ids],
       date: params[:date],
       time: params[:time]
     )
     event = get_viewing_party(viewing_party)
     client.insert_event('primary', event)
+
+    viewing_party[:friend_ids].each do |friend_id|
+      friend = User.find(friend_id)
+      friend.invitations.create(party_id: viewing_party.id)
+    end
+    
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
   end
