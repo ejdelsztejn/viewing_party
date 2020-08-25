@@ -13,7 +13,6 @@ class ViewPartiesController < ApplicationController
     client = get_google_calendar_client(current_user)
     viewing_party = current_user.view_parties.create(view_party_params)
     event = get_viewing_party(viewing_party)
-    binding.pry
     client.insert_event('primary', event)
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
@@ -57,9 +56,12 @@ class ViewPartiesController < ApplicationController
 
   def get_viewing_party(viewing_party)
     friends = params[:friend_ids]
-    attendees = friends.map do |id|
-      User.find(id).name
+    unless friends.nil?
+      attendees = friends.map do |id|
+        {email: User.find(id).email}
+      end
     end
+
     event = Google::Apis::CalendarV3::Event.new({
       summary: viewing_party[:movie_title],
       location: 'Your Favorite Streaming Service!',
@@ -74,7 +76,7 @@ class ViewPartiesController < ApplicationController
         date_time: '2019-09-07T09:00:00-07:00',
         time_zone: "Asia/Kolkata"
       },
-      attendees: attendees.join(', '),
+      attendees: attendees,
       reminders: {
         use_default: false,
         overrides: [
