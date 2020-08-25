@@ -11,13 +11,15 @@ class PartiesController < ApplicationController
 
   def create
     client = get_google_calendar_client(current_user)
+    end_time = params[:start_time] + (params[:duration_of_party] * 60) 
     viewing_party = current_user.parties.create(
       movie_title: params[:movie_title],
-      duration_of_party: params[:duration],
+      duration_of_party: params[:duration_of_party],
       friend_ids: params[:friend_ids],
-      date: params[:date],
+      date: params[:start_time],
       time: params[:time]
     )
+    require "pry"; binding.pry
     event = get_viewing_party(viewing_party)
     client.insert_event('primary', event)
     flash[:notice] = 'Viewing Party was successfully added to calendar.'

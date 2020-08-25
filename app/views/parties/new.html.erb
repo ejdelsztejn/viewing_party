@@ -7,11 +7,9 @@
   <%= label_tag :duration_of_party %><br/>
   <%= text_field_tag :duration_of_party, @movie.runtime %><br/>
   <br>
-  <%= label_tag :date %><br/>
-  <input type="date" id="date" name="date"><br/>
+  <%= label_tag :date_and_time %><br/>
+  <input type="datetime-local" id="start_time" name="start_time"><br/>
   <br>
-  <%= label_tag :time %><br/>
-  <input type="time" id="time" name="time"><br/>
   <p>Invite friends:</p>
   <% if current_user.friends.empty? %>
     <p>You have not added any friends</p>
