@@ -14,4 +14,6 @@ Rails.application.routes.draw do
 
   get '/parties/new/:movie_id', to: 'parties#new'
   post '/parties', to: 'parties#create'
+
+  post '/invitations', to: 'invitations#create'
 end

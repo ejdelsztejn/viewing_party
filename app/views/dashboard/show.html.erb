@@ -27,7 +27,7 @@
       <h5>Movie Title: <%= party.movie_title %></h5>
       <p>Date: <%= party.date %></p>
       <p>Time: <%= party.time %></p>
-      <% button_to "Add to Calendar", "/parties", method: :post %>
+      <%= button_to "Add to Calendar", "/invitations", method: :post %>
     <% end %>
   </section>
   <section class="created">
