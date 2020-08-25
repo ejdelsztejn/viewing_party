@@ -3,13 +3,14 @@ class User < ApplicationRecord
 
   has_many :friendships, dependent: :destroy
   has_many :friends, through: :friendships
+  has_many :viewing_parties
 
   def self.from_omniauth(response)
     user = User.find_or_create_by(uid: response[:uid])
     user.name = response[:info][:name]
     user.email = response[:info][:email]
     user.uid = response[:uid]
-    user.access_token = response[:credentials][:token]
+    user.token = response[:credentials][:token]
     user.expires_at = response[:credentials][:expires_at]
     user.refresh_token = response[:credentials][:refresh_token]
     user.save
