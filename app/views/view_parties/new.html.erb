@@ -1,5 +1,5 @@
 <h1>New Viewing Party</h1>
-<%= form_tag("/viewing_parties", method: :post) do %>
+<%= form_tag("/view_parties", method: :post) do %>
   <br>
   <%= label_tag :movie_title %><br/>
   <input type="text" id="movie_title" name="movie_title" value="<%= @movie.title %>" readonly><br/>

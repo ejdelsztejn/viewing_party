@@ -1,7 +1,7 @@
 require "google/apis/calendar_v3"
 require "google/api_client/client_secrets.rb"
 
-class ViewingPartiesController < ApplicationController
+class ViewPartiesController < ApplicationController
   CALENDAR_ID = 'primary'
 
   def new
@@ -11,15 +11,15 @@ class ViewingPartiesController < ApplicationController
 
   def create
     client = get_google_calendar_client(current_user)
-    require "pry"; binding.pry
-    event = get_event(viewing_party)
-    client.insert_event('primary', viewing_party)
+    viewing_party = current_user.view_parties.create(view_party_params)
+    event = get_viewing_party(viewing_party)
+    binding.pry
+    client.insert_event('primary', event)
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
-    require "pry"; binding.pry
     redirect_to '/dashboard'
   end
 
-  def get_google_calendar_client current_user
+  def get_google_calendar_client(current_user)
     client = Google::Apis::CalendarV3::CalendarService.new
     return unless (current_user.present? && current_user.token.present? && current_user.refresh_token.present?)
     secrets = Google::APIClient::ClientSecrets.new({
@@ -51,8 +51,13 @@ class ViewingPartiesController < ApplicationController
 
   private
 
+  def view_party_params
+    params.permit(:movie_title, :duration_of_party, :friend_ids, :date, :time)
+  end
+
   def get_viewing_party(viewing_party)
-    attendees = viewing_party[:friend_ids].map do |id|
+    friends = params[:friend_ids]
+    attendees = friends.map do |id|
       User.find(id).name
     end
     event = Google::Apis::CalendarV3::Event.new({

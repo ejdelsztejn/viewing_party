@@ -35,7 +35,7 @@ ActiveRecord::Schema.define(version: 2020_08_25_010053) do
     t.string "refresh_token"
   end
 
-  create_table "viewing_parties", force: :cascade do |t|
+  create_table "view_parties", force: :cascade do |t|
     t.string "movie_title"
     t.integer "duration_of_party"
     t.datetime "date"
@@ -44,9 +44,9 @@ ActiveRecord::Schema.define(version: 2020_08_25_010053) do
     t.bigint "user_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["user_id"], name: "index_viewing_parties_on_user_id"
+    t.index ["user_id"], name: "index_view_parties_on_user_id"
   end
 
   add_foreign_key "friendships", "users"
-  add_foreign_key "viewing_parties", "users"
+  add_foreign_key "view_parties", "users"
 end
