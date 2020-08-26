@@ -31,8 +31,7 @@ RSpec.describe 'user dashboard page' do
       movie_title: 'Spirited Away',
       duration_of_party: '125',
       friend_ids: ["#{current_user.id}"],
-      date: "2020-09-03",
-      time: "18:24"
+      start_time: "2020-09-03T18:24",
     )
 
     within '.invitations' do
