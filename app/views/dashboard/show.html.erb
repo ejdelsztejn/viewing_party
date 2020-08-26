@@ -24,10 +24,9 @@
 
     <% @current_user.invitations.each do |invitation| %>
       <% party = Party.find_by(id: invitation.party_id) %>
-      <% require 'pry'; binding.pry %>
       <h5>Movie Title: <%= party.movie_title %></h5>
       <p>Date and Time: <%= party.start_time %></p>
-      <%= button_to "Add to Calendar", "/invitations", method: :post %>
+      <%= link_to "Add to Calendar", "/invitations?party_id=#{invitation.party_id}&invitation_id=#{invitation.id}",  method: :post %>
     <% end %>
   </section>
   <section class="created">
