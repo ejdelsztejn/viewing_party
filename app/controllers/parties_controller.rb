@@ -15,6 +15,7 @@ class PartiesController < ApplicationController
     hour, minute = params[:start_time].split("T")[1].split(":").map(&:to_i)
     start_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
     end_time = DateTime.new(year, month, day, hour + (params[:duration_of_party].to_i / 60), minute + (params[:duration_of_party].to_i % 60), 0, "-06:00")
+
     viewing_party = current_user.parties.create(
       movie_title: params[:movie_title],
       duration_of_party: params[:duration_of_party],
@@ -23,14 +24,13 @@ class PartiesController < ApplicationController
       end_time: end_time
     )
     event = get_viewing_party(viewing_party)
-    require "pry"; binding.pry
     client.insert_event('primary', event)
 
     viewing_party[:friend_ids].each do |friend_id|
       friend = User.find(friend_id)
       friend.invitations.create(party_id: viewing_party.id)
     end
-    
+
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
   end
