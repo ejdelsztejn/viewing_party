@@ -1,9 +1,7 @@
-require "google/apis/calendar_v3"
-require "google/api_client/client_secrets.rb"
+require 'google/apis/calendar_v3'
+require 'google/api_client/client_secrets.rb'
 
 class InvitationsController < ApplicationController
-  CALENDAR_ID = 'primary'
-
   def create
     client = get_google_calendar_client(current_user)
 
@@ -23,20 +21,21 @@ class InvitationsController < ApplicationController
 
   def get_google_calendar_client(current_user)
     client = Google::Apis::CalendarV3::CalendarService.new
-    return unless (current_user.present? && current_user.token.present? && current_user.refresh_token.present?)
+    return unless current_user.present? && current_user.token.present? && current_user.refresh_token.present?
+
     secrets = Google::APIClient::ClientSecrets.new({
-      "web" => {
-        "access_token" => current_user.token,
-        "refresh_token" => current_user.refresh_token,
-        "client_id" => ENV["GOOGLE_API_KEY"],
-        "client_secret" => ENV["GOOGLE_API_SECRET"]
+      'web' => {
+        'access_token' => current_user.token,
+        'refresh_token' => current_user.refresh_token,
+        'client_id' => ENV['GOOGLE_API_KEY'],
+        'client_secret' => ENV['GOOGLE_API_SECRET']
       }
     })
     begin
       client.authorization = secrets.to_authorization
-      client.authorization.grant_type = "refresh_token"
+      client.authorization.grant_type = 'refresh_token'
 
-      if !current_user.present?
+      unless current_user.present?
         client.authorization.refresh!
         current_user.update_attributes(
           access_token: client.authorization.token,
@@ -54,13 +53,13 @@ class InvitationsController < ApplicationController
   private
 
   def get_viewing_party(viewing_party)
-    year, month, day = viewing_party.start_time.to_s.split(" ")[0].split("-").map(&:to_i)
-    hour, minute = viewing_party.start_time.to_s.split(" ")[1].split(":")[0..1].map(&:to_i)
-    start_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
+    year, month, day = viewing_party.start_time.to_s.split(' ')[0].split('-').map(&:to_i)
+    hour, minute = viewing_party.start_time.to_s.split(' ')[1].split(':')[0..1].map(&:to_i)
+    start_time = DateTime.new(year, month, day, hour, minute, 0, '-06:00')
 
-    year, month, day = viewing_party.end_time.to_s.split(" ")[0].split("-").map(&:to_i)
-    hour, minute = viewing_party.end_time.to_s.split(" ")[1].split(":")[0..1].map(&:to_i)
-    end_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
+    year, month, day = viewing_party.end_time.to_s.split(' ')[0].split('-').map(&:to_i)
+    hour, minute = viewing_party.end_time.to_s.split(' ')[1].split(':')[0..1].map(&:to_i)
+    end_time = DateTime.new(year, month, day, hour, minute, 0, '-06:00')
 
     event = Google::Apis::CalendarV3::Event.new({
       summary: viewing_party[:movie_title],
@@ -85,10 +84,10 @@ class InvitationsController < ApplicationController
       },
       notification_settings: {
         notifications: [
-                        {type: 'event_creation', method: 'email'},
-                        {type: 'event_change', method: 'email'},
-                        {type: 'event_cancellation', method: 'email'},
-                        {type: 'event_response', method: 'email'}
+                        { type: 'event_creation', method: 'email' },
+                        { type: 'event_change', method: 'email' },
+                        { type: 'event_cancellation', method: 'email' },
+                        { type: 'event_response', method: 'email' }
                        ]
       }, 'primary': true
     })
