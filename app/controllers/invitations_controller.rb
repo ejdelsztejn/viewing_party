@@ -1,35 +1,21 @@
 require "google/apis/calendar_v3"
 require "google/api_client/client_secrets.rb"
 
-class PartiesController < ApplicationController
+class InvitationsController < ApplicationController
   CALENDAR_ID = 'primary'
-
-  def new
-    movie_data = MovieData.all_data(params[:movie_id])
-    @movie = MovieResult.new(movie_data)
-  end
 
   def create
     client = get_google_calendar_client(current_user)
-    year, month, day = params[:start_time].split("-").map(&:to_i)
-    hour, minute = params[:start_time].split("T")[1].split(":").map(&:to_i)
-    start_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
-    end_time = DateTime.new(year, month, day, hour + (params[:duration_of_party].to_i / 60), minute + (params[:duration_of_party].to_i % 60), 0, "-06:00")
 
-    viewing_party = current_user.parties.create(
-      movie_title: params[:movie_title],
-      duration_of_party: params[:duration_of_party],
-      friend_ids: params[:friend_ids],
-      start_time: start_time,
-      end_time: end_time
-    )
+    # find the party associated with the link clicked on the dashboard
+    viewing_party = Party.find_by(id: params[:party_id])
+
     event = get_viewing_party(viewing_party)
     client.insert_event('primary', event)
 
-    viewing_party[:friend_ids].each do |friend_id|
-      friend = User.find(friend_id)
-      friend.invitations.create(party_id: viewing_party.id)
-    end
+    ## remove that party from the current_users invitations
+    invitation = Invitation.find_by(id: params[:invitation_id])
+    current_user.invitations.delete(invitation)
 
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
@@ -68,24 +54,28 @@ class PartiesController < ApplicationController
   private
 
   def get_viewing_party(viewing_party)
-    year, month, day = params[:start_time].split("-").map(&:to_i)
-    hour, minute = params[:start_time].split("T")[1].split(":").map(&:to_i)
+    year, month, day = viewing_party.start_time.to_s.split(" ")[0].split("-").map(&:to_i)
+    hour, minute = viewing_party.start_time.to_s.split(" ")[1].split(":")[0..1].map(&:to_i)
     start_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
-    end_time = DateTime.new(year, month, day, hour + (params[:duration_of_party].to_i / 60), minute + (params[:duration_of_party].to_i % 60), 0, "-06:00")
+
+    year, month, day = viewing_party.end_time.to_s.split(" ")[0].split("-").map(&:to_i)
+    hour, minute = viewing_party.end_time.to_s.split(" ")[1].split(":")[0..1].map(&:to_i)
+    end_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
 
     event = Google::Apis::CalendarV3::Event.new({
-      summary: 'Viewing Party',
+      summary: viewing_party[:movie_title],
       location: 'Your Favorite Streaming Service!',
-      description: viewing_party[:movie_title],
       start: {
+        # date_time: Time.new(task['start_date(1i)'],task['start_date(2i)'],task['start_date(3i)'],task['start_date(4i)'],task['start_date(5i)']).to_datetime.rfc3339,
+        # time_zone: "Asia/Kolkata"
         date_time: start_time,
-        time_zone: "America/Denver"
+        time_zone: 'America/Denver'
       },
       end: {
+        # date_time: Time.new(task['end_date(1i)'],task['end_date(2i)'],task['end_date(3i)'],task['end_date(4i)'],task['end_date(5i)']).to_datetime.rfc3339,
         date_time: end_time,
         time_zone: "America/Denver"
       },
-      #attendees: attendees,
       reminders: {
         use_default: false,
         overrides: [
@@ -102,6 +92,5 @@ class PartiesController < ApplicationController
                        ]
       }, 'primary': true
     })
-    event
   end
 end

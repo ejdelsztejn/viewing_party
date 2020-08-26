@@ -19,6 +19,28 @@
 </section>
 
 <section class="viewing-parties">
+  <section class="invitations">
+    <h3>Party Invitations: </h3>
+
+    <% @current_user.invitations.each do |invitation| %>
+      <% party = Party.find_by(id: invitation.party_id) %>
+      <h5>Movie Title: <%= party.movie_title %></h5>
+      <p>Date and Time: <%= party.start_time %></p>
+      <%= link_to "Add to Calendar", "/invitations?party_id=#{invitation.party_id}&invitation_id=#{invitation.id}",  method: :post %>
+    <% end %>
+  </section>
+  <section class="created">
+    <h3>Your Parties: </h3>
+
+    <% if @current_user.parties.empty? %>
+      <p>You have not created any parties.</p>
+    <% else %>
+      <% @current_user.parties.each do |party| %>
+        <h5>Movie Title: <%= party.movie_title %></h5>
+        <p>Date and Time: <%= party.start_time %></p>
+      <% end %>
+    <% end %>
+  </section>
 </section>
 
 
