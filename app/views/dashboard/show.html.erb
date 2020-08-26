@@ -25,8 +25,7 @@
     <% @current_user.invitations.each do |invitation| %>
       <% party = Party.find_by(id: invitation.party_id) %>
       <h5>Movie Title: <%= party.movie_title %></h5>
-      <p>Date: <%= party.date %></p>
-      <p>Time: <%= party.time %></p>
+      <p>Date and Time: <%= party.start_time %></p>
       <%= button_to "Add to Calendar", "/invitations", method: :post %>
     <% end %>
   </section>
@@ -38,8 +37,7 @@
     <% else %>
       <% @current_user.parties.each do |party| %>
         <h5>Movie Title: <%= party.movie_title %></h5>
-        <p>Date: <%= party.date %></p>
-        <p>Time: <%= party.time %></p>
+        <p>Date and Time: <%= party.start_time %></p>
       <% end %>
     <% end %>
   </section>
