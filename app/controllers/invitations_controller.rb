@@ -5,21 +5,17 @@ class InvitationsController < ApplicationController
   CALENDAR_ID = 'primary'
 
   def create
-    binding.pry
     client = get_google_calendar_client(current_user)
 
     # find the party associated with the link clicked on the dashboard
+    viewing_party = Party.find_by(id: params[:party_id])
 
-    # viewing_party = current_user.parties.create(
-    #   movie_title: params[:movie_title],
-    #   duration_of_party: params[:duration_of_party],
-    #   friend_ids: params[:friend_ids],
-    #   date: params[:date],
-    #   time: params[:time]
-    # )
     event = get_viewing_party(viewing_party)
     client.insert_event('primary', event)
+
     ## remove that party from the current_users invitations
+    invitation = Invitation.find_by(id: params[:invitation_id])
+    current_user.invitations.delete(invitation)
 
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
@@ -58,11 +54,13 @@ class InvitationsController < ApplicationController
   private
 
   def get_viewing_party(viewing_party)
-    unless viewing_party[:friend_ids].nil?
-      attendees = viewing_party[:friend_ids].map do |id|
-        {email: User.find(id).email}
-      end
-    end
+    year, month, day = viewing_party.start_time.to_s.split(" ")[0].split("-").map(&:to_i)
+    hour, minute = viewing_party.start_time.to_s.split(" ")[1].split(":")[0..1].map(&:to_i)
+    start_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
+
+    year, month, day = viewing_party.end_time.to_s.split(" ")[0].split("-").map(&:to_i)
+    hour, minute = viewing_party.end_time.to_s.split(" ")[1].split(":")[0..1].map(&:to_i)
+    end_time = DateTime.new(year, month, day, hour, minute, 0, "-06:00")
 
     event = Google::Apis::CalendarV3::Event.new({
       summary: viewing_party[:movie_title],
@@ -70,15 +68,14 @@ class InvitationsController < ApplicationController
       start: {
         # date_time: Time.new(task['start_date(1i)'],task['start_date(2i)'],task['start_date(3i)'],task['start_date(4i)'],task['start_date(5i)']).to_datetime.rfc3339,
         # time_zone: "Asia/Kolkata"
-        date_time: '2019-09-07T09:00:00-07:00',
-        time_zone: 'Asia/Kolkata'
+        date_time: start_time,
+        time_zone: 'America/Denver'
       },
       end: {
         # date_time: Time.new(task['end_date(1i)'],task['end_date(2i)'],task['end_date(3i)'],task['end_date(4i)'],task['end_date(5i)']).to_datetime.rfc3339,
-        date_time: '2019-09-07T09:00:00-07:00',
-        time_zone: "Asia/Kolkata"
+        date_time: end_time,
+        time_zone: "America/Denver"
       },
-      attendees: attendees,
       reminders: {
         use_default: false,
         overrides: [
