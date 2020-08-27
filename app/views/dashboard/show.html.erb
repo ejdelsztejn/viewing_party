@@ -25,7 +25,13 @@
     <% @current_user.invitations.each do |invitation| %>
       <% party = Party.find_by(id: invitation.party_id) %>
       <h5>Movie Title: <%= party.movie_title %></h5>
-      <p>Date and Time: <%= party.start_time %></p>
+      <% year, month, day = party.start_time.to_s.split(' ')[0].split('-').map(&:to_i) %>
+      <% hour, minute = party.start_time.to_s.split(' ')[1].split(':')[0..1].map(&:to_i) %>
+      <% if minute == 0 %>
+        <% minute = "00" %>
+      <% end %>
+      <p>Date: <%= "#{year}-#{month}-#{day}" %></p>
+      <p>Time: <%= "#{hour - 6}:#{minute}" %></p>
       <%= link_to "Add to Calendar", "/parties?party_id=#{invitation.party_id}&invitation_id=#{invitation.id}",  method: :post %>
     <% end %>
   </section>
@@ -37,7 +43,14 @@
     <% else %>
       <% @current_user.parties.each do |party| %>
         <h5>Movie Title: <%= party.movie_title %></h5>
-        <p>Date and Time: <%= party.start_time %></p>
+        <% year, month, day = party.start_time.to_s.split(' ')[0].split('-').map(&:to_i) %>
+        <% hour, minute = party.start_time.to_s.split(' ')[1].split(':')[0..1].map(&:to_i) %>
+        <% if minute == 0 %>
+          <% minute = "00" %>
+        <% end %>
+
+        <p>Date: <%= "#{year}-#{month}-#{day}" %></p>
+        <p>Time: <%= "#{hour - 6}:#{minute}" %></p>
       <% end %>
     <% end %>
   </section>
