@@ -1,5 +1,7 @@
 <h1>Welcome, <%= @current_user.name %></h1>
 
+<%= link_to "Back to Login", "/" %>
+
 <%= button_to "Movies", "/movies", method: :get %>
 
 <section class="friends">
