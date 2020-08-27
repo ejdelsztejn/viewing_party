@@ -36,7 +36,7 @@ class PartiesController < ApplicationController
     end
     event = get_viewing_party(viewing_party)
     client.insert_event('primary', event)
-    
+
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
   end
@@ -80,8 +80,8 @@ class PartiesController < ApplicationController
     if params.include?('party_id')
       year, month, day = viewing_party.start_time.to_s.split(' ')[0].split('-').map(&:to_i)
       hour, minute = viewing_party.start_time.to_s.split(' ')[1].split(':')[0..1].map(&:to_i)
-      start_time = DateTime.new(year, month, day, hour, minute, 0, '-06:00')
-      end_time = start_time + Rational(params[:duration_of_party].to_i, 1440)
+      start_time = DateTime.new(year, month, day, hour, minute, 0, '00:00')
+      end_time = start_time + Rational(viewing_party.duration_of_party.to_i, 1440)
     else
       year, month, day = params[:start_time].split("-").map(&:to_i)
       hour, minute = params[:start_time].split("T")[1].split(":").map(&:to_i)
