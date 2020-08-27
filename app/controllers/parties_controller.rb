@@ -43,7 +43,7 @@ class PartiesController < ApplicationController
 
   def get_google_calendar_client(current_user)
     client = Google::Apis::CalendarV3::CalendarService.new
-    return unless (current_user.present? && current_user.token.present? && current_user.refresh_token.present?)
+    # return unless (current_user.present? && current_user.token.present? && current_user.refresh_token.present?)
 
     secrets = Google::APIClient::ClientSecrets.new({
       'web' => {
