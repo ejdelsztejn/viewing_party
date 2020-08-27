@@ -30,10 +30,13 @@ RSpec.describe 'user dashboard page' do
     viewing_party_1 = jessye.parties.create(
       movie_title: 'Spirited Away',
       duration_of_party: '125',
-      friend_ids: ["#{current_user.id}"],
-      start_time: "2020-09-03T18:24",
+      friend_ids: [current_user.id],
+      start_time: "2020-09-03T18:24"
     )
 
+    visit '/dashboard'
+
+    save_and_open_page
     within '.invitations' do
       expect(page).to have_content('Spirited Away')
       expect(page).to have_content('Thu, 03 Sept 2020 18:24:00 UTC +00:00,')
@@ -55,7 +58,7 @@ RSpec.describe 'user dashboard page' do
       click_on 'Create Viewing Party'
 
       fill_in 'Duration of party', with: 200
-      fill_in 'Date', with: '2020-08-29'
+      fill_in 'Date and time', with: '2020-08-29'
       fill_in 'Time', with: '18:00'
       check('friend_ids[]', match: :first)
 
