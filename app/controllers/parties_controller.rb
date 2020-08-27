@@ -36,7 +36,7 @@ class PartiesController < ApplicationController
     end
     event = get_viewing_party(viewing_party)
     client.insert_event('primary', event)
-
+    
     flash[:notice] = 'Viewing Party was successfully added to calendar.'
     redirect_to '/dashboard'
   end
